@@ -39,7 +39,15 @@ FastAPI service that acts as a pre-intelligence layer for Clay GTM list enrichme
 
    At minimum, adjust paths if your data lives elsewhere (`DUCKDB_PATH`, `DOL_DATA_PATH`, `NAICS_DATA_PATH`). For full Clay/Mailjet/review flows, set the API keys and URLs described in `.env.example`.
 
-6. **Optional: load reference data** into DuckDB (or rely on first-start loading):
+6. **Optional: download + convert reference data** (official DOL zip → Parquet; NAICS 2022 CSV → Parquet + CSV):
+
+   ```bash
+   python scripts/fetch_reference_data.py --year 2024 --output-dir ./data
+   ```
+
+   This writes `data/dol_form5500.parquet`, `data/naics_codes.parquet`, and `data/naics_codes.csv`. Set `DOL_DATA_PATH` / `NAICS_DATA_PATH` to those paths (or rely on `.env.example` defaults under `./data/`). NAICS uses the public [WID Center NAICS 2022 table](https://data.widcenter.org/download/naics2022/naiccode2022.csv) (full 6-digit list); use `--naics-source census-xlsx` for the Census industry crosswalk only (sparse 6-digit rows; requires `pip install openpyxl`).
+
+7. **Optional: load reference data** into an existing DuckDB file (or rely on app first-start loading from `DOL_DATA_PATH` / `NAICS_DATA_PATH`):
 
    - Put DOL data at the path in `DOL_DATA_PATH` (Parquet or CSV), or run:
 
