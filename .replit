@@ -1,0 +1,31 @@
+# Replit workspace + Autoscale deployment for the FastAPI app.
+# Docs: https://docs.replit.com/replit-app/configuration
+
+entrypoint = "app/main.py"
+modules = ["python-3.11"]
+
+[nix]
+channel = "stable-24_05"
+
+packager.language = "python3"
+
+hidden = [".venv", ".pythonlibs", ".config", "__pycache__"]
+
+onBoot = "python3 -m pip install -q -r requirements.txt"
+
+run = "python3 -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000"
+
+[[ports]]
+localPort = 8000
+externalPort = 80
+
+[unitTest]
+language = "python3"
+
+[gitHubImport]
+requiredFiles = [".replit", "replit.nix"]
+
+[deployment]
+deploymentTarget = "autoscale"
+build = "python3 -m pip install -r requirements.txt"
+run = ["sh", "-c", "python3 -m uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]

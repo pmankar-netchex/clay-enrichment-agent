@@ -1,0 +1,31 @@
+# Environment
+.env
+.env.local
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+dist/
+build/
+
+# Local databases
+*.duckdb
+*.duckdb.wal
+
+# Large / local reference data (upload via Replit or Secrets; see README)
+data/*
+!data/README.md
+
+# Nested clone / accidental git dir inside data
+data/.git/
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
