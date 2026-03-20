@@ -1,5 +1,5 @@
 """
-Script to download and load DOL Form 5500 data into DuckDB.
+Load a local DOL Form 5500 extract (Parquet or CSV) into DuckDB.
 
 Usage:
     python scripts/load_dol_data.py [--source /path/to/dol.parquet]
